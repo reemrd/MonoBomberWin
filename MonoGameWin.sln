@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameWin", "hsgsfddg\MonoGameWin.csproj", "{123125A9-F0E7-45AF-BD6C-AA5A077784D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BDB3536-2BC4-406D-BFB1-5EB9687FF2F5}"
+	ProjectSection(SolutionItems) = preProject
+		random snippets.txt = random snippets.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{123125A9-F0E7-45AF-BD6C-AA5A077784D9}.Debug|x86.ActiveCfg = Debug|x86
+		{123125A9-F0E7-45AF-BD6C-AA5A077784D9}.Debug|x86.Build.0 = Debug|x86
+		{123125A9-F0E7-45AF-BD6C-AA5A077784D9}.Release|x86.ActiveCfg = Release|x86
+		{123125A9-F0E7-45AF-BD6C-AA5A077784D9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

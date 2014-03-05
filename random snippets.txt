@@ -1,0 +1,44 @@
+ ////                                                                          UP RIGHT 
+                    //if (keybState.IsKeyDown(Keys.Right) && keybState.IsKeyDown(Keys.Up))
+                    //{
+                    //    if ((xCounter % 96 == 0 && (rawData[currentBlock - 20].B == 255 || yCounter % 96 != 0)) ||
+                    //       (xCounter % 96 != 0 && rawData[currentBlock - 20].B == 255 && rawData[currentBlock - 19].B == 255))
+                    //        move("y", -1);
+
+                    //    if ((yCounter % 96 == 0 && rawData[currentBlock + 1].B == 255) ||
+                    //       (yCounter % 96 != 0 && rawData[currentBlock + 1].B == 255 && rawData[currentBlock + 21].B == 255))
+                    //       move("y", +1);
+                    //}
+                    ////                                                                          DOWN RIGHT
+                    //if (keybState.IsKeyDown(Keys.Right) && keybState.IsKeyDown(Keys.Down))
+                    //{
+                    //    if ((xCounter % 96 == 0 && rawData[currentBlock + 20].B == 255) ||
+                    //       (xCounter % 96 != 0 && rawData[currentBlock + 20].B == 255 && rawData[currentBlock + 21].B == 255))
+                    //        move("y", 1);
+
+                    //    if ((yCounter % 96 == 0 && rawData[currentBlock + 1].B == 255) ||
+                    //         (yCounter % 96 != 0 && rawData[currentBlock + 1].B == 255 && rawData[currentBlock + 21].B == 255))
+                    //        move("x", +1);
+                    //}
+                    ////                                                                          DOWN LEFT
+                    //if (keybState.IsKeyDown(Keys.Left) && keybState.IsKeyDown(Keys.Down))
+                    //{
+                    //    if ((xCounter % 96 == 0 && rawData[currentBlock + 20].B == 255) ||
+                    //       (xCounter % 96 != 0 && rawData[currentBlock + 20].B == 255 && rawData[currentBlock + 21].B == 255))
+                    //        move("y", 1);
+
+                    //    if ((yCounter % 96 == 0 && rawData[currentBlock - 1].B == 255 || xCounter % 96 != 0) ||
+                    //       (yCounter % 96 != 0 && rawData[currentBlock - 1].B == 255 && rawData[currentBlock + 19].B == 255))
+                    //        move("x", -1);
+                    //}
+                    ////                                                                          UP LEFT                                     
+                    //if (keybState.IsKeyDown(Keys.Up) && keybState.IsKeyDown(Keys.Left))
+                    //{
+                    //    if ((xCounter % 96 == 0 && (rawData[currentBlock - 20].B == 255 || yCounter % 96 != 0)) ||
+                    //       (xCounter % 96 != 0 && rawData[currentBlock - 20].B == 255 && rawData[currentBlock - 19].B == 255))
+                    //        move("y", -1);
+
+                    //    if ((yCounter % 96 == 0 && rawData[currentBlock - 1].B == 255 || xCounter % 96 != 0) ||
+                    //       (yCounter % 96 != 0 && rawData[currentBlock - 1].B == 255 && rawData[currentBlock + 19].B == 255))
+                    //        move("x", -1);
+                    //} 
