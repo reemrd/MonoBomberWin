@@ -37,7 +37,8 @@ namespace WinGame
         //List<Rectangle> rectz = new List<Rectangle>();
         Color[] rawData;
         string statuss = "default";
-        int yCounter, xCounter;
+        int yCounter = 0;
+        int xCounter = 0;
         Point p;
         string DebugString = "lala";
         //string[] axisNames = new string[10] { "right", "right", "downright", "down", "downleft", "left", "left", "upleft", "top", "upright" };
@@ -101,9 +102,7 @@ namespace WinGame
         {
             //Filling pixel map color array
             rawData = new Color[bgMap.Width * bgMap.Height];
-            bgMap.GetData<Color>(rawData);
-            yCounter = 0;
-            xCounter = 0;
+            bgMap.GetData<Color>(rawData); 
 
             ////x range - is wider hence we can ommit counting the y array as long as гена хуй we know the lenght of y.. 
             //THE PIECE OF CODE BELOW CAN BE USED TO VISUALIZE THE HUJ BG MAPPING FOR ERROR DETECTION PURPOSES 
@@ -169,8 +168,8 @@ namespace WinGame
             keybState = Keyboard.GetState();
             if (keybState.GetPressedKeys().Length > 0)
             {
-                resX = (int)((xCounter + 48) / ts);
-                resY = (int)((yCounter + 48) / ts);
+                resX = (int)((xCounter +48) / ts);
+                resY = (int)((yCounter +48) / ts);
                 currentBlock = ((resY * 20) + resX) + 21;
                 string jujjdf = keybState.GetPressedKeys().ToString();
 
@@ -178,29 +177,33 @@ namespace WinGame
                 //up 
                 if (keybState.IsKeyDown(Keys.Up))
                 {
-                    if ((xCounter % ts == 0 && (rawData[currentBlock - 20].R == 255 || yCounter % ts != 0)) ||
-                        (xCounter % ts != 0 && rawData[currentBlock - 20].R == 255 && rawData[currentBlock - 19].R == 255))
+                    if ((xCounter % ts == 0 && (rawData[currentBlock - 20].R == 255 || yCounter % ts > 0)) ||   
+                        (xCounter % ts >= 48 && ((rawData[currentBlock - 20].R == 255 && rawData[currentBlock - 21].R == 255) || yCounter % ts > 0)) ||
+                        (xCounter % ts != 0 && xCounter % ts < 48 && ((rawData[currentBlock - 20].R == 255 && rawData[currentBlock - 19].R == 255) || yCounter % ts > 0)))
                         move("y", -1);
                 }
                 //d 
                 if (keybState.IsKeyDown(Keys.Down))
                 {
-                    if ((xCounter % ts == 0 && rawData[currentBlock + 20].R == 255) ||
-                       (xCounter % ts != 0 && rawData[currentBlock + 20].R == 255 && rawData[currentBlock + 21].R == 255))
+                    if ((xCounter % ts == 0 && (rawData[currentBlock + 20].R == 255 || yCounter % ts > 0)) ||
+                        (xCounter % ts >= 48 && ((rawData[currentBlock + 20].R == 255 && rawData[currentBlock + 19].R == 255) || yCounter % ts > 0)) ||
+                        (xCounter % ts != 0 && xCounter % ts < 48 && ((rawData[currentBlock + 20].R == 255 && rawData[currentBlock + 21].R == 255) || yCounter % ts > 0)))
                         move("y", 1);
                 }
                 //l  
                 if (keybState.IsKeyDown(Keys.Left))
                 {
-                    if ((yCounter % ts == 0 && (rawData[currentBlock - 1].R == 255 || xCounter % ts != 0)) ||
-                       (yCounter % ts != 0 && rawData[currentBlock - 1].R == 255 && rawData[currentBlock + 19].R == 255))
+                    if ((yCounter % ts == 0 && (rawData[currentBlock - 1].R == 255 || xCounter % ts > 0)) ||
+                        (yCounter % ts >= 48 && ((rawData[currentBlock - 1].R == 255 && rawData[currentBlock - 21].R == 255) || xCounter % ts > 0)) ||
+                        (yCounter % ts != 0 && yCounter % ts < 48 && ((rawData[currentBlock - 1].R == 255 && rawData[currentBlock + 19].R == 255) || xCounter % ts > 0)))
                         move("x", -1);
                 }
                 //r 
                 if (keybState.IsKeyDown(Keys.Right))
                 {
-                    if ((yCounter % ts == 0 && rawData[currentBlock + 1].R == 255) ||
-                       (yCounter % ts != 0 && rawData[currentBlock + 1].R == 255 && rawData[currentBlock + 21].R == 255))
+                    if ((yCounter % ts == 0 && (rawData[currentBlock + 1].R == 255 || xCounter % ts > 0)) ||
+                        (yCounter % ts >= 48 && ((rawData[currentBlock - 19].R == 255 && rawData[currentBlock + 1].R == 255) || xCounter % ts > 0)) ||
+                        (yCounter % ts != 0 && yCounter % ts < 48 && ((rawData[currentBlock + 1].R == 255 && rawData[currentBlock + 21].R == 255) || xCounter % ts > 0)))
                         move("x", 1);
                 }
             }
@@ -222,9 +225,10 @@ namespace WinGame
 
             //var arrowMid = new Vector2(up.Width / 2, up.Height / 2);
             spriteBatch.Draw(backgroundTexture, new Vector2(0, 0), null, Color.White, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(player, playerPos, null, Color.Red, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(player, playerPos, null, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
-            //string lol = "o";
+            string lol = (xCounter % 96).ToString();
+            string lol2 = (yCounter % 96).ToString();
             string current = currentBlock + " xCounter: " + xCounter + " yCounter: " + yCounter;
 
 
@@ -243,8 +247,9 @@ namespace WinGame
                 else if (rawData[x].R == 100)
                     spriteBatch.Draw(block, blox[x], Color.Red);
             }
-            //spriteBatch.DrawString(font, lol, new Vector2(355, 355), Color.Orange);
-           spriteBatch.DrawString(font, current, new Vector2(455, 455), Color.Red);
+           // spriteBatch.DrawString(font, lol, new Vector2(455, 455), Color.Orange);
+           // spriteBatch.DrawString(font, lol2, new Vector2(355, 355), Color.Orange);
+           //spriteBatch.DrawString(font, current, new Vector2(455, 655), Color.Red);
 
             DrawBomb();
 
@@ -263,18 +268,18 @@ namespace WinGame
                     int x = ts;
                     int y = ts;
                     bombCountdown = 120;
-                    if (xCounter % ts > 48)
-                    {
-                        x = ts * 2;
-                        bombBlock = currentBlock + 1;
-                    }
+                    //if (xCounter % ts > 48)
+                    //{
+                    //    x = ts * 2;
+                    //    bombBlock = currentBlock + 1;
+                    //}
 
-                    else if (yCounter % ts > 48)
-                    {
-                        bombBlock = currentBlock + 21;
-                        y = ts * 2;
-                    }
-                    else
+                    //else if (yCounter % ts > 48)
+                    //{
+                    //    bombBlock = currentBlock + 21;
+                    //    y = ts * 2;
+                    //}
+                    //else
                         bombBlock = currentBlock;
 
 
