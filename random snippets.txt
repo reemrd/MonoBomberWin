@@ -1,44 +1,77 @@
- ////                                                                          UP RIGHT 
-                    //if (keybState.IsKeyDown(Keys.Right) && keybState.IsKeyDown(Keys.Up))
-                    //{
-                    //    if ((xCounter % 96 == 0 && (rawData[currentBlock - 20].B == 255 || yCounter % 96 != 0)) ||
-                    //       (xCounter % 96 != 0 && rawData[currentBlock - 20].B == 255 && rawData[currentBlock - 19].B == 255))
-                    //        move("y", -1);
+ //for (int i = bomba.impactFactor; i > 0; i--)  
+                        //{ 
+                        //    if (bomba.bombBlock + i > 0 && rawData[bomba.bombBlock + i].R != 100 && rawData[bomba.bombBlock + i].R != 0)                               //RIGHT
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X + ts * i), (bomba.position.Y)), Color.White); } 
+                        //    else if (i == 1 && rawData[bomba.bombBlock + i].R == 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X + ts * i), (bomba.position.Y)), Color.White); }
 
-                    //    if ((yCounter % 96 == 0 && rawData[currentBlock + 1].B == 255) ||
-                    //       (yCounter % 96 != 0 && rawData[currentBlock + 1].B == 255 && rawData[currentBlock + 21].B == 255))
-                    //       move("y", +1);
+
+                        //    if (bomba.bombBlock - i > 0 && rawData[bomba.bombBlock - i].R != 100 && rawData[bomba.bombBlock - i].R != 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X - ts * i), (bomba.position.Y)), Color.White); }
+                        //    else if (i == 1 && rawData[bomba.bombBlock - i].R == 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X - ts * i), (bomba.position.Y)), Color.White); }
+
+                        //    if (bomba.bombBlock - i*20 > 0 && rawData[bomba.bombBlock - i * 20].R != 100 && rawData[bomba.bombBlock - i * 20].R != 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y - ts * (i*20))), Color.White); }       //UP
+                        //    else if (i == 1 && rawData[bomba.bombBlock - i*20].R == 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y - ts * (i * 20))), Color.White); }
+
+                        //    if (bomba.bombBlock + i * 20 > 0 &&  rawData[bomba.bombBlock + i * 20].R != 100 && rawData[bomba.bombBlock + i * 20].R != 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y + ts * (i * 20))), Color.White); }       //DOWN
+                        //    else if (i == 1 && rawData[bomba.bombBlock + i * 20].R == 0)
+                        //    { spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y + ts * (i * 20))), Color.White); }
+                        
+                        //}
+
+
+
+
+
+
+
+						     //    int[] target = new int[] { -20, 1, +20, -1 };
+
+
+                    //    if (bomba.impactFactor > 1)
+                    //    {
+                    //        for (int x = 0; x < 4; x++)
+                    //        {
+                    //            int countShite = 1;
+                    //            while (countShite <= bomba.impactFactor - 1 && rawData[bomba.bombBlock + target[x] * (x + 1)].R == 255)
+                    //            {
+                    //                countShite++;
+                    //            }
+                    //            target[x] *= countShite;
+                    //        }
+                    //    }
+
+                    //    foreach (int aim in target)
+                    //    {
+                    //        if (rawData[bomba.bombBlock + aim].R == 0)
+                    //            rawData[bomba.bombBlock + aim].R = 255;
+                    //    }
+
+                    //    bombz.Remove(bomba);
+                    //    availableBombs++;
                     //}
-                    ////                                                                          DOWN RIGHT
-                    //if (keybState.IsKeyDown(Keys.Right) && keybState.IsKeyDown(Keys.Down))
-                    //{
-                    //    if ((xCounter % 96 == 0 && rawData[currentBlock + 20].B == 255) ||
-                    //       (xCounter % 96 != 0 && rawData[currentBlock + 20].B == 255 && rawData[currentBlock + 21].B == 255))
-                    //        move("y", 1);
 
-                    //    if ((yCounter % 96 == 0 && rawData[currentBlock + 1].B == 255) ||
-                    //         (yCounter % 96 != 0 && rawData[currentBlock + 1].B == 255 && rawData[currentBlock + 21].B == 255))
-                    //        move("x", +1);
+                    //if (rawData[bombBlock - 1].R != 100)
+                    //{ //LEFT
+                    //    spriteBatch.Draw(explode, new Vector2((bombPosition.X - ts), (bombPosition.Y)), Color.White);
+                    //    if (bombCountdown == 1)
+                    //        rawData[bombBlock - 1].R = 255;
                     //}
-                    ////                                                                          DOWN LEFT
-                    //if (keybState.IsKeyDown(Keys.Left) && keybState.IsKeyDown(Keys.Down))
-                    //{
-                    //    if ((xCounter % 96 == 0 && rawData[currentBlock + 20].B == 255) ||
-                    //       (xCounter % 96 != 0 && rawData[currentBlock + 20].B == 255 && rawData[currentBlock + 21].B == 255))
-                    //        move("y", 1);
 
-                    //    if ((yCounter % 96 == 0 && rawData[currentBlock - 1].B == 255 || xCounter % 96 != 0) ||
-                    //       (yCounter % 96 != 0 && rawData[currentBlock - 1].B == 255 && rawData[currentBlock + 19].B == 255))
-                    //        move("x", -1);
+                    //if (rawData[bombBlock + 20].R != 100)
+                    //{ //BOTTOM
+                    //    spriteBatch.Draw(explode, new Vector2((bombPosition.X), (bombPosition.Y + ts)), Color.White);
+                    //    if (bombCountdown == 1)
+                    //        rawData[bombBlock + 20].R = 255;
                     //}
-                    ////                                                                          UP LEFT                                     
-                    //if (keybState.IsKeyDown(Keys.Up) && keybState.IsKeyDown(Keys.Left))
-                    //{
-                    //    if ((xCounter % 96 == 0 && (rawData[currentBlock - 20].B == 255 || yCounter % 96 != 0)) ||
-                    //       (xCounter % 96 != 0 && rawData[currentBlock - 20].B == 255 && rawData[currentBlock - 19].B == 255))
-                    //        move("y", -1);
 
-                    //    if ((yCounter % 96 == 0 && rawData[currentBlock - 1].B == 255 || xCounter % 96 != 0) ||
-                    //       (yCounter % 96 != 0 && rawData[currentBlock - 1].B == 255 && rawData[currentBlock + 19].B == 255))
-                    //        move("x", -1);
-                    //} 
+                    //if (rawData[bombBlock - 20].R != 100)
+                    //{ //TOP
+                    //    spriteBatch.Draw(explode, new Vector2((bombPosition.X), (bombPosition.Y - ts)), Color.White);
+                    //    if (bombCountdown == 1)
+                    //        rawData[bombBlock - 20].R = 255;
+                    //}

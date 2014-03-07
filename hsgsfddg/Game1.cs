@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
+using System.Linq; 
 #endregion
 
 namespace WinGame
@@ -36,21 +37,19 @@ namespace WinGame
         Vector2 playerPos = new Vector2(96, 96);
         //List<Rectangle> rectz = new List<Rectangle>();
         Color[] rawData;
-        string statuss = "default";
+        //string statuss = "default";
         int yCounter = 0;
         int xCounter = 0;
-        Point p;
-        string DebugString = "lala";
+        //Point p; 
         //string[] axisNames = new string[10] { "right", "right", "downright", "down", "downleft", "left", "left", "upleft", "top", "upright" };
         int step = 3;
         //will vary depending on selected player position
         int currentBlock = 21;
         int resY, resX;
 
-        KeyboardState keybState = Keyboard.GetState();
-        Vector2 bombPosition;
-        int bombCountdown = 0;
-        int bombBlock;
+        KeyboardState keybState = Keyboard.GetState(); 
+        int availableBombs = 1;
+        List<Bomb> bombz = new List<Bomb>();
 
 
         public Game1()
@@ -72,7 +71,7 @@ namespace WinGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // TODO: Add your initialization logic here 
 
             base.Initialize();
         }
@@ -118,6 +117,11 @@ namespace WinGame
                     counter++;
                 }
             }
+
+            resX = (int)((xCounter + 48) / ts);
+            resY = (int)((yCounter + 48) / ts);
+            currentBlock = ((resY * 20) + resX) + 21; 
+
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -146,7 +150,7 @@ namespace WinGame
             base.Update(gameTime);
         }
 
-        void move(string axis, int direction)
+        void Move(string axis, int direction)
         {
             if (axis == "x")
             {
@@ -158,21 +162,16 @@ namespace WinGame
                 playerPos.Y += (step * direction);
                 yCounter += (step * direction);
             }
+            resX = (int)((xCounter + 48) / ts);
+            resY = (int)((yCounter + 48) / ts);
+            currentBlock = ((resY * 20) + resX) + 21; 
         }
-
-
-
-
+          
         public void HandleInput()
         {                                                                                     //HANDLE INPUT 
             keybState = Keyboard.GetState();
             if (keybState.GetPressedKeys().Length > 0)
             {
-                resX = (int)((xCounter +48) / ts);
-                resY = (int)((yCounter +48) / ts);
-                currentBlock = ((resY * 20) + resX) + 21;
-                string jujjdf = keybState.GetPressedKeys().ToString();
-
                  
                 //up 
                 if (keybState.IsKeyDown(Keys.Up))
@@ -180,7 +179,7 @@ namespace WinGame
                     if ((xCounter % ts == 0 && (rawData[currentBlock - 20].R == 255 || yCounter % ts > 0)) ||   
                         (xCounter % ts >= 48 && ((rawData[currentBlock - 20].R == 255 && rawData[currentBlock - 21].R == 255) || yCounter % ts > 0)) ||
                         (xCounter % ts != 0 && xCounter % ts < 48 && ((rawData[currentBlock - 20].R == 255 && rawData[currentBlock - 19].R == 255) || yCounter % ts > 0)))
-                        move("y", -1);
+                        Move("y", -1);
                 }
                 //d 
                 if (keybState.IsKeyDown(Keys.Down))
@@ -188,7 +187,7 @@ namespace WinGame
                     if ((xCounter % ts == 0 && (rawData[currentBlock + 20].R == 255 || yCounter % ts > 0)) ||
                         (xCounter % ts >= 48 && ((rawData[currentBlock + 20].R == 255 && rawData[currentBlock + 19].R == 255) || yCounter % ts > 0)) ||
                         (xCounter % ts != 0 && xCounter % ts < 48 && ((rawData[currentBlock + 20].R == 255 && rawData[currentBlock + 21].R == 255) || yCounter % ts > 0)))
-                        move("y", 1);
+                        Move("y", 1);
                 }
                 //l  
                 if (keybState.IsKeyDown(Keys.Left))
@@ -196,7 +195,7 @@ namespace WinGame
                     if ((yCounter % ts == 0 && (rawData[currentBlock - 1].R == 255 || xCounter % ts > 0)) ||
                         (yCounter % ts >= 48 && ((rawData[currentBlock - 1].R == 255 && rawData[currentBlock - 21].R == 255) || xCounter % ts > 0)) ||
                         (yCounter % ts != 0 && yCounter % ts < 48 && ((rawData[currentBlock - 1].R == 255 && rawData[currentBlock + 19].R == 255) || xCounter % ts > 0)))
-                        move("x", -1);
+                        Move("x", -1);
                 }
                 //r 
                 if (keybState.IsKeyDown(Keys.Right))
@@ -204,7 +203,7 @@ namespace WinGame
                     if ((yCounter % ts == 0 && (rawData[currentBlock + 1].R == 255 || xCounter % ts > 0)) ||
                         (yCounter % ts >= 48 && ((rawData[currentBlock - 19].R == 255 && rawData[currentBlock + 1].R == 255) || xCounter % ts > 0)) ||
                         (yCounter % ts != 0 && yCounter % ts < 48 && ((rawData[currentBlock + 1].R == 255 && rawData[currentBlock + 21].R == 255) || xCounter % ts > 0)))
-                        move("x", 1);
+                        Move("x", 1);
                 }
             }
  
@@ -222,8 +221,7 @@ namespace WinGame
             spriteBatch.Begin();
 
             Vector2 bgMiddle = new Vector2(backgroundTexture.Width / 3, backgroundTexture.Height / 3);
-
-            //var arrowMid = new Vector2(up.Width / 2, up.Height / 2);
+             
             spriteBatch.Draw(backgroundTexture, new Vector2(0, 0), null, Color.White, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0f);
             spriteBatch.Draw(player, playerPos, null, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
@@ -231,13 +229,8 @@ namespace WinGame
             string lol2 = (yCounter % 96).ToString();
             string current = currentBlock + " xCounter: " + xCounter + " yCounter: " + yCounter;
 
-
-            // spriteBatch.DrawString(font, DebugString, new Vector2(1222, 444), Color.Orange);
-
-            //  string closesd = "closest " + closest.ToString();
-
-
-
+             
+            //  string closesd = "closest " + closest.ToString(); 
             for (int x = 0; x < 240; x++)
             {
                 if (rawData[x].R == 0 && rawData[x].G != 255)
@@ -251,10 +244,7 @@ namespace WinGame
            // spriteBatch.DrawString(font, lol2, new Vector2(355, 355), Color.Orange);
            //spriteBatch.DrawString(font, current, new Vector2(455, 655), Color.Red);
 
-            DrawBomb();
-
-
-
+            DrawBomb(); 
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -263,72 +253,80 @@ namespace WinGame
         {
             if (keybState.IsKeyDown(Keys.X))
             {
-                if (bombCountdown == 0)
+                if (availableBombs > 0)
                 {
-                    int x = ts;
-                    int y = ts;
-                    bombCountdown = 120;
-                    //if (xCounter % ts > 48)
-                    //{
-                    //    x = ts * 2;
-                    //    bombBlock = currentBlock + 1;
-                    //}
-
-                    //else if (yCounter % ts > 48)
-                    //{
-                    //    bombBlock = currentBlock + 21;
-                    //    y = ts * 2;
-                    //}
-                    //else
-                        bombBlock = currentBlock;
-
-
-                    bombPosition = new Vector2((resX * ts + x), (resY * ts + y));
-
+                    bombz.Add(new Bomb
+                    {
+                        isPlaced = true,
+                        bombBlock = currentBlock,
+                        position = new Vector2((resX * ts + ts), (resY * ts + ts)),
+                        type = "sadf",
+                        playerNumber = 1,
+                        countdown = 120,
+                        impactFactor = 2
+                    });
+                    availableBombs--;
                 }
             }
 
-            if (bombCountdown > 0)
+            if (bombz.Count() > 0)
             {
-                spriteBatch.Draw(bomb, bombPosition, Color.AliceBlue);
-                bombCountdown--;
-
-                if (bombCountdown > 0 && bombCountdown < 33)
+                foreach (var bomba in bombz.ToList())
                 {
-                    if (rawData[bombBlock + 1].R != 100)
-                    { //RIGHT
-                        spriteBatch.Draw(explode, new Vector2((bombPosition.X + ts), (bombPosition.Y)), Color.White);
-                        if (bombCountdown == 1)
-                            rawData[bombBlock + 1].R = 255;
-                    }
+                    spriteBatch.Draw(bomb, bomba.position, Color.AliceBlue);
 
-                    if (rawData[bombBlock - 1].R != 100)
-                    { //LEFT
-                        spriteBatch.Draw(explode, new Vector2((bombPosition.X - ts), (bombPosition.Y)), Color.White);
-                        if (bombCountdown == 1)
-                            rawData[bombBlock - 1].R = 255;
-                    }
+                                    if (bomba.countdown < 30)
+                                    {
+                                        int R, L, T, B;
+                                        R = L = T = B = 1;
 
-                    if (rawData[bombBlock + 20].R != 100)
-                    { //BOTTOM
-                        spriteBatch.Draw(explode, new Vector2((bombPosition.X), (bombPosition.Y + ts)), Color.White);
-                        if (bombCountdown == 1)
-                            rawData[bombBlock + 20].R = 255;
-                    }
+                                        while (bomba.bombBlock + R > 0 && bomba.impactFactor >= R && (rawData[bomba.bombBlock + R].R == 255 || rawData[bomba.bombBlock + R].R == 0))
+                                        {
+                                            spriteBatch.Draw(explode, new Vector2((bomba.position.X + ts * R), (bomba.position.Y)), Color.White);
+                                            if (rawData[bomba.bombBlock + R].R == 0){
+                                                rawData[bomba.bombBlock + R].R = 255;
+                                                break; } 
+                                            R++;   }
 
-                    if (rawData[bombBlock - 20].R != 100)
-                    { //TOP
-                        spriteBatch.Draw(explode, new Vector2((bombPosition.X), (bombPosition.Y - ts)), Color.White);
-                        if (bombCountdown == 1)
-                            rawData[bombBlock - 20].R = 255;
-                    }
+                                        while (bomba.bombBlock - L > 0 && bomba.impactFactor >= L && (rawData[bomba.bombBlock - L].R == 255 || rawData[bomba.bombBlock - L].R == 0))
+                                        {
+                                            spriteBatch.Draw(explode, new Vector2((bomba.position.X - ts * L), (bomba.position.Y)), Color.White);
+                                            if (rawData[bomba.bombBlock - L].R == 0)
+                                            {
+                                                rawData[bomba.bombBlock - L].R = 255;
+                                                break;  }
+                                            L++;   }
 
+                                        while (bomba.bombBlock - T*20 > 0 && bomba.impactFactor >= T && (rawData[bomba.bombBlock - T * 20].R == 255 || rawData[bomba.bombBlock - T * 20].R == 0))
+                                        {
+                                            spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y - ts * T )), Color.White);
+                                            if (rawData[bomba.bombBlock - T*20].R == 0)
+                                            {
+                                                rawData[bomba.bombBlock - T*20].R = 255;
+                                                break; }
+                                            T++;    }
+
+
+                                        while (bomba.bombBlock + B*20 > 0 && bomba.bombBlock + B * 20 > 0 && bomba.impactFactor >= B && (rawData[bomba.bombBlock + B * 20].R == 255 || rawData[bomba.bombBlock + B * 20].R == 0))
+                                        {
+                                            spriteBatch.Draw(explode, new Vector2((bomba.position.X), (bomba.position.Y + ts * B)), Color.White);
+                                            if (rawData[bomba.bombBlock + B*20].R == 0)
+                                            {
+                                                rawData[bomba.bombBlock + B*20].R = 255;
+                                                break; }
+                                            B++;    } 
+                                    }
+
+                    if (bomba.countdown == 0)
+                    {
+                        bombz.Remove(bomba);
+                        availableBombs++;
+                    }
+               
+                    bomba.countdown--;
                 }
             }
         }
-
-
-
 
         void ProcessKeyboard()
         {
